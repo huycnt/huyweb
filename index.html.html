@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Văn học 12 - Kết Nối Tri Thức (VK-01) | THPT Yên Lãng</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Playfair Display (Literature Header) & Be Vietnam Pro (Body text) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sepia: {
+                            50: '#faf8f5',   /* Nền chính */
+                            100: '#f4efe6',  /* Nền thẻ / Container */
+                            200: '#e6ded0',  /* Viền nhẹ */
+                            300: '#d5c7b3',  /* Viền đậm hơn */
+                            500: '#9e8160',  /* Mẫu nhấn */
+                            700: '#674d36',  /* Chữ vừa */
+                            800: '#433023',  /* Chữ chính */
+                            900: '#2c1e14',  /* Chữ đậm / Đáy */
+                        },
+                        gold: {
+                            light: '#e9d8a6',
+                            DEFAULT: '#b89753',
+                            hover: '#9a7b3b',
+                            dark: '#73571d',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'Georgia', 'serif'],
+                        sans: ['"Be Vietnam Pro"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Animations */
+        body {
+            background-color: #faf8f5;
+            color: #433023;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar Sepia Theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f4efe6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d5c7b3;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b89753;
+        }
+
+        /* Glassmorphism Sepia Style */
+        .sepia-glass {
+            background: rgba(244, 239, 230, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(230, 222, 208, 0.8);
+        }
+
+        /* Shimmer Loading animation for "Đang cập nhật" */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .shimmer-bg {
+            background: linear-gradient(90deg, #f4efe6 25%, #e6ded0 50%, #f4efe6 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2.5s infinite;
+        }
+
+        /* Smooth Transition Classes */
+        .tab-panel {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .tab-panel.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Custom Modal Overlay Blur */
+        .modal-backdrop {
+            background-color: rgba(44, 30, 20, 0.6);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-gold selection:text-white">
+
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-sepia-50 transition-opacity duration-700">
+        <div class="text-center px-4 max-w-lg">
+            <div class="inline-block p-4 mb-4 rounded-full bg-sepia-100 border-2 border-gold/40 shadow-lg animate-bounce">
+                <i class="fa-solid fa-book-open-reader text-5xl text-gold"></i>
+            </div>
+            <h1 class="font-serif text-3xl md:text-4xl font-bold text-sepia-800 mb-2 tracking-wide">VĂN HỌC 12</h1>
+            <p class="text-gold font-medium text-lg tracking-widest uppercase mb-4">Bộ Sách Kết Nối Tri Thức Với Cuộc Sống</p>
+            <p class="text-sepia-700 text-sm italic mb-6">Ứng Dụng Hỗ Trợ Học Tập & Ôn Luyện Thi Tốt Nghiệp THPT (Mã: VK-01)</p>
+            
+            <div class="w-48 h-1.5 bg-sepia-200 rounded-full mx-auto overflow-hidden">
+                <div id="splash-progress" class="h-full bg-gold transition-all duration-1000 ease-out w-0"></div>
+            </div>
+            <p class="text-xs text-sepia-500 mt-4">Trường THPT Yên Lãng • Lớp 12A2</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div id="app-content" class="opacity-0 transition-opacity duration-500 flex-grow flex flex-col">
+        
+        <!-- HEADER / NAVIGATION BAR -->
+        <header class="sticky top-0 z-40 sepia-glass border-b border-sepia-200 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-20">
+                    
+                    <!-- Logo / Title -->
+                    <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                        <div class="w-10 h-10 rounded-lg bg-gold/20 border border-gold flex items-center justify-center text-gold font-serif font-bold text-xl">
+                            VK
+                        </div>
+                        <div>
+                            <span class="font-serif font-bold text-xl text-sepia-900 block leading-tight">VĂN HỌC 12</span>
+                            <span class="text-xs text-gold font-medium tracking-wider uppercase block">Kết Nối Tri Thức (VK-01)</span>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Nav Links -->
+                    <nav class="hidden md:flex space-x-1 lg:space-x-2">
+                        <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-gold bg-sepia-100">
+                            <i class="fa-solid fa-house"></i> <span>Trang Chủ</span>
+                        </button>
+                        <button onclick="switchTab('works')" id="nav-works" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-sepia-700 hover:text-gold hover:bg-sepia-100">
+                            <i class="fa-solid fa-book-bookmark"></i> <span>Tác Phẩm</span>
+                        </button>
+                        <button onclick="switchTab('practice')" id="nav-practice" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-sepia-700 hover:text-gold hover:bg-sepia-100">
+                            <i class="fa-solid fa-pen-ruler"></i> <span>Ôn Luyện & Đề Thi</span>
+                        </button>
+                        <button onclick="switchTab('discussion')" id="nav-discussion" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-sepia-700 hover:text-gold hover:bg-sepia-100">
+                            <i class="fa-solid fa-comments"></i> <span>Thảo Luận</span>
+                        </button>
+                        <button onclick="switchTab('about')" id="nav-about" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-sepia-700 hover:text-gold hover:bg-sepia-100">
+                            <i class="fa-solid fa-circle-info"></i> <span>Giới Thiệu</span>
+                        </button>
+                    </nav>
+
+                    <!-- Mobile Menu Toggle Button -->
+                    <div class="flex md:hidden">
+                        <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-md text-sepia-800 hover:text-gold focus:outline-none">
+                            <i class="fa-solid fa-bars text-2xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Drawer -->
+            <div id="mobile-menu" class="hidden md:hidden border-t border-sepia-200 bg-sepia-50 px-4 pt-2 pb-4 space-y-2">
+                <button onclick="switchTab('home'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-sepia-800 hover:bg-sepia-100 flex items-center space-x-3">
+                    <i class="fa-solid fa-house w-6 text-gold"></i><span>Trang Chủ</span>
+                </button>
+                <button onclick="switchTab('works'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-sepia-800 hover:bg-sepia-100 flex items-center space-x-3">
+                    <i class="fa-solid fa-book-bookmark w-6 text-gold"></i><span>Thư Viện Tác Phẩm</span>
+                </button>
+                <button onclick="switchTab('practice'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-sepia-800 hover:bg-sepia-100 flex items-center space-x-3">
+                    <i class="fa-solid fa-pen-ruler w-6 text-gold"></i><span>Ôn Luyện & Đề Thi</span>
+                </button>
+                <button onclick="switchTab('discussion'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-sepia-800 hover:bg-sepia-100 flex items-center space-x-3">
+                    <i class="fa-solid fa-comments w-6 text-gold"></i><span>Góc Thảo Luận</span>
+                </button>
+                <button onclick="switchTab('about'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-sepia-800 hover:bg-sepia-100 flex items-center space-x-3">
+                    <i class="fa-solid fa-circle-info w-6 text-gold"></i><span>Giới Thiệu Dự Án</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT CONTAINER -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+            <!-- 1. TAB TRANG CHỦ (HOME) -->
+            <section id="tab-home" class="tab-panel active space-y-10">
+                <!-- HERO BANNER -->
+                <div class="relative rounded-2xl bg-gradient-to-r from-sepia-900 via-sepia-800 to-sepia-900 text-sepia-100 p-8 md:p-12 shadow-2xl border border-gold/30 overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                        <i class="fa-solid fa-scroll text-[240px] text-gold"></i>
+                    </div>
+                    <div class="relative z-10 max-w-3xl space-y-4">
+                        <div class="inline-flex items-center space-x-2 bg-gold/20 border border-gold/40 px-3 py-1 rounded-full text-xs font-semibold text-gold-light uppercase tracking-wider">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <span>Dự án Học tập Ngữ Văn 12 - Mã VK-01</span>
+                        </div>
+                        <h1 class="font-serif text-3xl md:text-5xl font-bold text-sepia-50 leading-tight">
+                            Khám Phá Chi Sâu Văn Học <br class="hidden sm:inline"/><span class="text-gold">Kết Nối Tri Thức Với Cuộc Sống</span>
+                        </h1>
+                        <p class="text-sepia-200 text-sm md:text-base leading-relaxed">
+                            Hệ thống tổng hợp lý thuyết tác phẩm chuyên sâu, kho 60 câu hỏi trắc nghiệm chi tiết theo bài và tính năng tạo Đề thi tổng hợp 30 câu ngẫu nhiên chuẩn cấu trúc thi Tốt nghiệp THPT 2027.
+                        </p>
+                        <div class="pt-4 flex flex-wrap gap-4">
+                            <button onclick="switchTab('works')" class="px-6 py-3 rounded-xl bg-gold hover:bg-gold-hover text-sepia-900 font-bold text-sm transition shadow-lg flex items-center space-x-2">
+                                <i class="fa-solid fa-book-open"></i><span>Đọc Tác Phẩm Ngay</span>
+                            </button>
+                            <button onclick="startRandomExam()" class="px-6 py-3 rounded-xl bg-sepia-100/10 hover:bg-sepia-100/20 text-sepia-100 border border-sepia-100/30 font-semibold text-sm transition flex items-center space-x-2">
+                                <i class="fa-solid fa-circle-play text-gold"></i><span>Thi Thử Ngẫu Nhiên 30 Câu</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROJECT METRICS / INFO CARDS -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="p-6 rounded-xl bg-sepia-100 border border-sepia-200 shadow-sm flex items-center space-x-4 hover:border-gold/50 transition">
+                        <div class="p-4 rounded-xl bg-gold/10 text-gold text-2xl"><i class="fa-solid fa-school"></i></div>
+                        <div>
+                            <p class="text-xs text-sepia-500 font-medium">Đơn vị triển khai</p>
+                            <h3 class="font-bold text-sepia-800 text-base">THPT Yên Lãng</h3>
+                        </div>
+                    </div>
+                    <div class="p-6 rounded-xl bg-sepia-100 border border-sepia-200 shadow-sm flex items-center space-x-4 hover:border-gold/50 transition">
+                        <div class="p-4 rounded-xl bg-gold/10 text-gold text-2xl"><i class="fa-solid fa-users text-gold"></i></div>
+                        <div>
+                            <p class="text-xs text-sepia-500 font-medium">Tác giả phần mềm</p>
+                            <h3 class="font-bold text-sepia-800 text-base">Nguyễn Thiện Huy (12A2)</h3>
+                        </div>
+                    </div>
+                    <div class="p-6 rounded-xl bg-sepia-100 border border-sepia-200 shadow-sm flex items-center space-x-4 hover:border-gold/50 transition">
+                        <div class="p-4 rounded-xl bg-gold/10 text-gold text-2xl"><i class="fa-solid fa-chalkboard-user"></i></div>
+                        <div>
+                            <p class="text-xs text-sepia-500 font-medium">Giáo viên hướng dẫn</p>
+                            <h3 class="font-bold text-sepia-800 text-base">Cô Võ Thị Mỹ Ngà</h3>
+                        </div>
+                    </div>
+                    <div class="p-6 rounded-xl bg-sepia-100 border border-sepia-200 shadow-sm flex items-center space-x-4 hover:border-gold/50 transition">
+                        <div class="p-4 rounded-xl bg-gold/10 text-gold text-2xl"><i class="fa-solid fa-calendar-days"></i></div>
+                        <div>
+                            <p class="text-xs text-sepia-500 font-medium">Năm học thực hiện</p>
+                            <h3 class="font-bold text-sepia-800 text-base">2026 - 2027</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FEATURED WORKS CAROUSEL / GRID -->
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 class="font-serif text-2xl font-bold text-sepia-900">Tác Phẩm Tiêu Biểu</h2>
+                            <p class="text-xs text-sepia-500">Xem nhanh thông tin và chuẩn bị hành trang kiến thức</p>
+                        </div>
+                        <button onclick="switchTab('works')" class="text-sm font-semibold text-gold hover:text-gold-dark transition flex items-center space-x-1">
+                            <span>Xem tất cả 6 tác phẩm</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                    </div>
+
+                    <div id="home-featured-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. TAB THƯ VIỆN TÁC PHẨM (WORKS) -->
+            <section id="tab-works" class="tab-panel space-y-8">
+                <div class="text-center max-w-2xl mx-auto space-y-2">
+                    <h2 class="font-serif text-3xl font-bold text-sepia-900">Thư Viện Tác Phẩm Văn Học 12</h2>
+                    <p class="text-sepia-700 text-sm">Tổng hợp các bài giảng chuyên sâu 5 phần chuẩn cấu trúc phân tích: Tác giả, Tóm tắt, Nội dung & Nhân văn, Nghệ thuật, Trích đoạn mẫu.</p>
+                </div>
+
+                <!-- ALL WORKS GRID -->
+                <div id="works-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Dynamic rendering of 6 main works + "Updating..." card via JS -->
+                </div>
+            </section>
+
+            <!-- 3. TAB ÔN LUYỆN & TRẮC NGHIỆM (PRACTICE) -->
+            <section id="tab-practice" class="tab-panel space-y-8">
+                <div class="text-center max-w-2xl mx-auto space-y-2">
+                    <h2 class="font-serif text-3xl font-bold text-sepia-900">Hệ Thống Ôn Luyện & Kiểm Tra</h2>
+                    <p class="text-sepia-700 text-sm">Kho câu hỏi trắc nghiệm gồm 10 câu cho mỗi tác phẩm (Tổng 60 câu) và Đề thi thử ngẫu nhiên 30 câu.</p>
+                </div>
+
+                <!-- EXAM MODE SELECTOR -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Individual Practice -->
+                    <div class="p-6 rounded-2xl bg-sepia-100 border border-sepia-200 shadow-md space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-xl bg-gold/15 text-gold flex items-center justify-center text-xl font-bold">
+                                <i class="fa-solid fa-list-check"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-serif text-xl font-bold text-sepia-900">Ôn Luyện Theo Tác Phẩm</h3>
+                                <p class="text-xs text-sepia-600">Rèn luyện từng bài, đọ sức 10 câu trắc nghiệm chuyên sâu</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-semibold text-sepia-700 uppercase tracking-wider block">Chọn tác phẩm cần luyện tập:</label>
+                            <select id="practice-work-select" class="w-full p-3 rounded-xl border border-sepia-300 bg-sepia-50 text-sepia-800 text-sm focus:ring-2 focus:ring-gold focus:outline-none">
+                                <option value="0">1. Xuân Tóc Đỏ Cứu Quốc (Số Đỏ - Vũ Trọng Phụng)</option>
+                                <option value="1">2. Cảm Hoài (Thuật Hoài - Đặng Dung)</option>
+                                <option value="2">3. Mùa Lá Rụng Trong Vườn (Ma Văn Kháng)</option>
+                                <option value="3">4. Tây Tiến (Quang Dũng)</option>
+                                <option value="4">5. Đàn Ghi Ta Của Lor-ca (Thanh Thảo)</option>
+                                <option value="5">6. Cuộc Đời Của Pi (Yann Martel)</option>
+                            </select>
+                        </div>
+                        <button onclick="startSpecificQuiz()" class="w-full py-3 rounded-xl bg-gold hover:bg-gold-hover text-sepia-900 font-bold text-sm transition shadow-sm flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-play"></i><span>Bắt Đầu Ôn Luyện (10 Câu)</span>
+                        </button>
+                    </div>
+
+                    <!-- Randomized 30-Question Full Exam -->
+                    <div class="p-6 rounded-2xl bg-gradient-to-br from-sepia-900 to-sepia-800 text-sepia-100 shadow-md space-y-4 border border-gold/40 relative overflow-hidden">
+                        <div class="absolute -right-6 -bottom-6 opacity-10">
+                            <i class="fa-solid fa-clock-rotate-left text-9xl text-gold"></i>
+                        </div>
+                        <div class="flex items-center space-x-3 relative z-10">
+                            <div class="w-12 h-12 rounded-xl bg-gold/20 text-gold-light flex items-center justify-center text-xl font-bold border border-gold/30">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-serif text-xl font-bold text-sepia-50">Đề Thi Tổng Hợp (30 Câu)</h3>
+                                <p class="text-xs text-sepia-300">Rút ngẫu nhiên từ kho 60 câu • Có tính thời gian 30 phút</p>
+                            </div>
+                        </div>
+                        <p class="text-xs text-sepia-200 leading-relaxed relative z-10">
+                            Hệ thống sẽ tự động xáo trộn và trích xuất ngẫu nhiên 30 câu hỏi từ toàn bộ 6 tác phẩm. Bài thi tự động chấm điểm, tính tỷ lệ phần trăm và xem lời giải chi tiết.
+                        </p>
+                        <button onclick="startRandomExam()" class="w-full py-3 rounded-xl bg-gold hover:bg-gold-hover text-sepia-900 font-bold text-sm transition shadow-lg flex items-center justify-center space-x-2 relative z-10">
+                            <i class="fa-solid fa-shuffle"></i><span>Bắt Đầu Làm Đề Thi Ngẫu Nhiên</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- QUIZ DISPLAY AREA (Hidden by default) -->
+                <div id="quiz-container" class="hidden rounded-2xl bg-sepia-100 border border-sepia-300 p-6 md:p-8 shadow-xl space-y-6">
+                    <div class="flex flex-wrap items-center justify-between border-b border-sepia-200 pb-4 gap-4">
+                        <div>
+                            <span id="quiz-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-gold/20 text-gold border border-gold/30">Chế độ: Theo bài</span>
+                            <h3 id="quiz-title" class="font-serif text-2xl font-bold text-sepia-900 mt-1">Tên Tác Phẩm</h3>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div id="quiz-timer" class="hidden items-center space-x-2 text-sepia-800 font-mono font-bold bg-sepia-200 px-4 py-2 rounded-xl text-lg">
+                                <i class="fa-solid fa-stopwatch text-gold animate-pulse"></i><span id="timer-text">30:00</span>
+                            </div>
+                            <button onclick="cancelQuiz()" class="px-4 py-2 rounded-xl text-xs font-semibold text-red-700 bg-red-100 hover:bg-red-200 transition">
+                                <i class="fa-solid fa-xmark"></i> Hủy Bài Thi
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question Container -->
+                    <div id="quiz-questions-list" class="space-y-8">
+                        <!-- Questions injected dynamically -->
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-4 border-t border-sepia-200 flex justify-end">
+                        <button onclick="submitQuiz()" class="px-8 py-3 rounded-xl bg-gold hover:bg-gold-hover text-sepia-900 font-bold text-base transition shadow-md flex items-center space-x-2">
+                            <i class="fa-solid fa-paper-plane"></i><span>Nộp Bài Thi & Chấm Điểm</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- QUIZ RESULT MODAL / AREA -->
+                <div id="quiz-result-area" class="hidden rounded-2xl bg-sepia-100 border border-gold p-8 shadow-2xl text-center space-y-6">
+                    <div class="inline-block p-4 rounded-full bg-gold/20 text-gold text-4xl">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="font-serif text-3xl font-bold text-sepia-900">Kết Quả Bài Thi</h3>
+                    <div class="max-w-md mx-auto p-6 rounded-xl bg-sepia-50 border border-sepia-200 space-y-3">
+                        <div class="flex justify-between text-sm text-sepia-700">
+                            <span>Số câu trả lời đúng:</span>
+                            <span id="result-correct" class="font-bold text-sepia-900">0 / 0</span>
+                        </div>
+                        <div class="flex justify-between text-sm text-sepia-700">
+                            <span>Tỷ lệ chính xác:</span>
+                            <span id="result-percent" class="font-bold text-gold text-lg">0%</span>
+                        </div>
+                        <div class="w-full bg-sepia-200 h-3 rounded-full overflow-hidden">
+                            <div id="result-progress-bar" class="bg-gold h-full transition-all duration-1000 w-0"></div>
+                        </div>
+                        <p id="result-feedback" class="text-xs italic text-sepia-600 pt-2">Tuyệt vời! Bạn đã nắm rất vững kiến thức.</p>
+                    </div>
+                    <div class="flex justify-center space-x-4">
+                        <button onclick="resetQuizView()" class="px-6 py-2.5 rounded-xl bg-sepia-800 text-sepia-100 font-bold text-sm hover:bg-sepia-900 transition">
+                            <i class="fa-solid fa-rotate-left"></i> Làm Bài Khác
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. TAB KHÔNG GIAN THẢO LUẬN (DISCUSSION) -->
+            <section id="tab-discussion" class="tab-panel space-y-6">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <h2 class="font-serif text-3xl font-bold text-sepia-900">Không Gian Thảo Luận Ngữ Văn</h2>
+                        <p class="text-xs text-sepia-600">Trao đổi ý tưởng, dàn ý làm bài và thảo luận chuyên đề lớp 12A2</p>
+                    </div>
+                    <button onclick="openNewTopicModal()" class="px-5 py-2.5 rounded-xl bg-gold hover:bg-gold-hover text-sepia-900 font-bold text-sm transition shadow-sm flex items-center space-x-2">
+                        <i class="fa-solid fa-plus"></i><span>Tạo Chủ Đề Mới</span>
+                    </button>
+                </div>
+
+                <!-- DISCORD / FORUM STYLE INTERFACE -->
+                <div class="rounded-2xl border border-sepia-300 bg-sepia-100 shadow-md overflow-hidden grid grid-cols-1 md:grid-cols-4 min-h-[500px]">
+                    <!-- Channels Sidebar -->
+                    <div class="bg-sepia-200/60 border-r border-sepia-300 p-4 space-y-4">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-sepia-600 px-2"><i class="fa-solid fa-hashtag"></i> Kênh Thảo Luận</h4>
+                        <div id="topic-channels-list" class="space-y-1">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Chat / Comments Main Area -->
+                    <div class="md:col-span-3 flex flex-col justify-between bg-sepia-50 p-4 md:p-6">
+                        <!-- Active Topic Info Header -->
+                        <div class="border-b border-sepia-200 pb-3 mb-4">
+                            <h3 id="current-topic-title" class="font-serif text-xl font-bold text-sepia-900"># Phân tích nhân vật Xuân Tóc Đỏ</h3>
+                            <p id="current-topic-desc" class="text-xs text-sepia-600">Nghệ thuật trào phúng đỉnh cao của Vũ Trọng Phụng qua nhân vật Xuân.</p>
+                        </div>
+
+                        <!-- Messages Stream -->
+                        <div id="messages-container" class="flex-grow space-y-4 overflow-y-auto max-h-[360px] pr-2 mb-4">
+                            <!-- Populated dynamically -->
+                        </div>
+
+                        <!-- Chat Input Box -->
+                        <form id="chat-form" onsubmit="handleSendComment(event)" class="flex space-x-2">
+                            <input type="text" id="chat-author" placeholder="Tên bạn..." class="w-1/4 p-3 rounded-xl border border-sepia-300 bg-sepia-100 text-sm focus:ring-2 focus:ring-gold focus:outline-none" required>
+                            <input type="text" id="chat-text" placeholder="Gửi ý kiến thảo luận..." class="flex-grow p-3 rounded-xl border border-sepia-300 bg-sepia-100 text-sm focus:ring-2 focus:ring-gold focus:outline-none" required>
+                            <button type="submit" class="px-5 py-3 rounded-xl bg-gold hover:bg-gold-hover text-sepia-900 font-bold text-sm transition">
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. TAB GIỚI THIỆU (ABOUT) -->
+            <section id="tab-about" class="tab-panel space-y-8">
+                <div class="max-w-4xl mx-auto space-y-8">
+                    <!-- MAIN ABOUT CARD -->
+                    <div class="rounded-2xl bg-sepia-100 border border-sepia-300 p-8 shadow-lg space-y-6">
+                        <div class="flex items-center space-x-4 border-b border-sepia-200 pb-6">
+                            <div class="w-16 h-16 rounded-2xl bg-gold/20 text-gold flex items-center justify-center text-3xl font-bold border border-gold/30">
+                                VK
+                            </div>
+                            <div>
+                                <h2 class="font-serif text-2xl md:text-3xl font-bold text-sepia-900">Ứng Dụng Hỗ Trợ Học Tập Ngữ Văn 12</h2>
+                                <p class="text-gold font-semibold text-sm">Mã sản phẩm: VK-01 • Bộ sách Kết Nối Tri Thức Với Cuộc Sống</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4 text-sepia-800 text-sm leading-relaxed">
+                            <h3 class="font-serif text-lg font-bold text-sepia-900">Mục tiêu phát triển sản phẩm:</h3>
+                            <p>
+                                Ứng dụng **Văn học 12 - VK-01** được thiết kế nhằm giúp học sinh lớp 12 dễ dàng hệ thống hóa toàn bộ kiến thức tác phẩm trọng tâm trong chương trình Ngữ văn 12 (Kết Nối Tri Thức). Phần mềm kết hợp giữa việc đọc hiểu tác phẩm sâu sắc và kiểm tra đánh giá năng lực thông qua kho trắc nghiệm phong phú, chuẩn hóa theo định hướng thi Tốt nghiệp THPT Quốc gia.
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                                <div class="p-4 rounded-xl bg-sepia-50 border border-sepia-200 space-y-1">
+                                    <h4 class="font-bold text-sepia-900"><i class="fa-solid fa-user-pen text-gold mr-2"></i>Học sinh thực hiện:</h4>
+                                    <p class="text-sepia-700">Nguyễn Thiện Huy (Lớp 12A2)</p>
+                                    <p class="text-xs text-sepia-500">Trường THPT Yên Lãng - Hà Nội</p>
+                                </div>
+                                <div class="p-4 rounded-xl bg-sepia-50 border border-sepia-200 space-y-1">
+                                    <h4 class="font-bold text-sepia-900"><i class="fa-solid fa-chalkboard-user text-gold mr-2"></i>Giáo viên hướng dẫn:</h4>
+                                    <p class="text-sepia-700">Cô Võ Thị Mỹ Ngà</p>
+                                    <p class="text-xs text-sepia-500">Tổ Ngữ Văn - Trường THPT Yên Lãng</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ACKNOWLEDGEMENT -->
+                        <div class="p-6 rounded-xl bg-gold/10 border border-gold/30 space-y-2">
+                            <h4 class="font-serif font-bold text-sepia-900 flex items-center">
+                                <i class="fa-solid fa-heart text-gold mr-2"></i> Lời Cảm Ơn Chân Thành
+                            </h4>
+                            <p class="text-xs text-sepia-700 italic leading-relaxed">
+                                "Em xin chân thành cảm ơn cô **Võ Thị Mỹ Ngà** đã luôn tận tình hướng dẫn, định hướng nội dung chuyên môn và truyền cảm hứng yêu thích môn Ngữ văn cho em cùng tập thể lớp 12A2. Cảm ơn Ban Giám hiệu Trường THPT Yên Lãng đã tạo môi trường học tập tuyệt vời cho chúng em."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bg-sepia-900 text-sepia-300 border-t border-sepia-800 py-8 mt-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3">
+                <div class="flex justify-center items-center space-x-2">
+                    <span class="font-serif font-bold text-sepia-100 text-lg">Dự Án Ngữ Văn 12 - Mã VK-01</span>
+                </div>
+                <p class="text-xs text-sepia-400">Trường THPT Yên Lãng • Lớp 12A2 • Tác giả: Nguyễn Thiện Huy • GVHD: Võ Thị Mỹ Ngà</p>
+                <p class="text-[11px] text-sepia-500">© 2026-2027 Kết Nối Tri Thức Với Cuộc Sống. Tất cả nội dung được biên soạn cho mục đích học tập.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- MODAL ĐỌC TÁC PHẨM CHI TIẾT (READING MODAL) -->
+    <div id="modal-reader" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4 md:p-6">
+        <div class="bg-sepia-50 w-full max-w-4xl max-h-[90vh] rounded-2xl shadow-2xl border border-gold flex flex-col overflow-hidden animate-fade-in">
+            <!-- Modal Header -->
+            <div class="p-6 bg-sepia-100 border-b border-sepia-200 flex items-center justify-between sticky top-0 z-10">
+                <div>
+                    <span id="modal-genre" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-gold/20 text-gold uppercase tracking-wider">Thể Loại</span>
+                    <h2 id="modal-title" class="font-serif text-2xl md:text-3xl font-bold text-sepia-900 mt-1">Tên Tác Phẩm</h2>
+                    <p id="modal-author" class="text-xs font-semibold text-sepia-600">Tác giả</p>
+                </div>
+                <button onclick="closeReaderModal()" class="w-10 h-10 rounded-full bg-sepia-200 hover:bg-sepia-300 text-sepia-800 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body (5 Detailed Sections) -->
+            <div class="p-6 md:p-8 overflow-y-auto space-y-8 flex-grow text-sepia-800 text-sm leading-relaxed">
+                <!-- Section 1: Tác giả -->
+                <div class="space-y-2 border-l-4 border-gold pl-4">
+                    <h3 class="font-serif text-lg font-bold text-sepia-900 flex items-center">
+                        <i class="fa-solid fa-user-ninja text-gold mr-2"></i> 1. Tác Giả & Phong Cách Nghệ Thuật
+                    </h3>
+                    <div id="modal-sec-author" class="text-sepia-700 space-y-2"></div>
+                </div>
+
+                <!-- Section 2: Tóm tắt -->
+                <div class="space-y-2 border-l-4 border-gold pl-4">
+                    <h3 class="font-serif text-lg font-bold text-sepia-900 flex items-center">
+                        <i class="fa-solid fa-file-contract text-gold mr-2"></i> 2. Tóm Tắt Tác Phẩm Chi Tiết
+                    </h3>
+                    <div id="modal-sec-summary" class="text-sepia-700 space-y-2"></div>
+                </div>
+
+                <!-- Section 3: Giá trị nội dung & nhân văn -->
+                <div class="space-y-2 border-l-4 border-gold pl-4">
+                    <h3 class="font-serif text-lg font-bold text-sepia-900 flex items-center">
+                        <i class="fa-solid fa-gem text-gold mr-2"></i> 3. Giá Trị Nội Dung & Ý Nghĩa Nhân Văn / Thời Sự
+                    </h3>
+                    <div id="modal-sec-content" class="text-sepia-700 space-y-2"></div>
+                </div>
+
+                <!-- Section 4: Giá trị nghệ thuật -->
+                <div class="space-y-2 border-l-4 border-gold pl-4">
+                    <h3 class="font-serif text-lg font-bold text-sepia-900 flex items-center">
+                        <i class="fa-solid fa-palette text-gold mr-2"></i> 4. Giá Trị Nghệ Thuật Đặc Sắc
+                    </h3>
+                    <div id="modal-sec-art" class="text-sepia-700 space-y-2"></div>
+                </div>
+
+                <!-- Section 5: Trích đoạn mẫu -->
+                <div class="space-y-2 border-l-4 border-gold pl-4">
+                    <h3 class="font-serif text-lg font-bold text-sepia-900 flex items-center">
+                        <i class="fa-solid fa-quote-left text-gold mr-2"></i> 5. Trích Đoạn Tiêu Biểu / Văn Bản Mẫu
+                    </h3>
+                    <div id="modal-sec-excerpt" class="p-4 rounded-xl bg-sepia-100 font-serif italic text-sepia-900 border border-sepia-200"></div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-sepia-100 border-t border-sepia-200 flex justify-end">
+                <button onclick="closeReaderModal()" class="px-6 py-2 rounded-xl bg-gold text-sepia-900 font-bold text-xs hover:bg-gold-hover transition">
+                    Đóng Văn Bản
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL TẠO CHỦ ĐỀ THẢO LUẬN MỚI -->
+    <div id="modal-topic" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-4">
+        <div class="bg-sepia-50 w-full max-w-md rounded-2xl shadow-2xl border border-gold p-6 space-y-4">
+            <h3 class="font-serif text-xl font-bold text-sepia-900"><i class="fa-solid fa-comments text-gold mr-2"></i> Tạo Chủ Đề Thảo Luận Mới</h3>
+            <form onsubmit="handleCreateTopic(event)" class="space-y-4">
+                <div>
+                    <label class="text-xs font-semibold text-sepia-700 uppercase">Tên chủ đề:</label>
+                    <input type="text" id="topic-title-input" placeholder="Ví dụ: Phân tích hình tượng người lính Tây Tiến" class="w-full p-3 rounded-xl border border-sepia-300 bg-sepia-100 text-sm mt-1 focus:ring-2 focus:ring-gold focus:outline-none" required>
+                </div>
+                <div>
+                    <label class="text-xs font-semibold text-sepia-700 uppercase">Mô tả ngắn:</label>
+                    <textarea id="topic-desc-input" rows="3" placeholder="Mô tả nội dung cần thảo luận cùng các bạn..." class="w-full p-3 rounded-xl border border-sepia-300 bg-sepia-100 text-sm mt-1 focus:ring-2 focus:ring-gold focus:outline-none" required></textarea>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeNewTopicModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-sepia-700 bg-sepia-200 hover:bg-sepia-300 transition">Hủy</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold text-sepia-900 bg-gold hover:bg-gold-hover transition">Tạo Chủ Đề</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT DATA & ENGINE -->
+    <script>
+        /* ----------------------------------------------------
+           1. DATABASE OF WORKS (6 Main Works with 5 Detailed Sections each)
+        ---------------------------------------------------- */
+        const worksData = [
+            {
+                id: 0,
+                title: "Xuân Tóc Đỏ Cứu Quốc",
+                excerptTitle: "Trích đoạn Số Đỏ - Chương XIX",
+                author: "Vũ Trọng Phụng (1912 - 1939)",
+                genre: "Tiểu thuyết trào phúng",
+                tagline: "Đỉnh cao trào phúng văn học lãng mạn - hiện thực VN",
+                authorSec: "Vũ Trọng Phụng là 'ông vua văn đống Bắc Kỳ', nổi tiếng với giọng văn trào phúng cay đắng, sắc sảo. Ông nhìn thấu bản chất giả dối, lố lăng của xã hội thành thị Việt Nam thời Pháp thuộc qua phong trào 'Âu hóa' nửa mùa.",
+                summarySec: "Đoạn trích kể về cuộc thi đấu quần vợt giữa hai vận động viên vô địch Xiêm (Thái Lan) và Xuân Tóc Đỏ. Để phục vụ mưu đồ chính trị của chính phủ, Xuân Tóc Đỏ được lệnh phải nhường thắng lợi cho tay vợt Xiêm nhằm giữ hòa hiếu hai nước. Xuân đã thể hiện màn 'thua cố ý' cực kỳ tài tình, sau đó hùng hồn diễn thuyết trước đám đông nhân dân rằng mình đã hi sinh danh dự cá nhân vì tổ quốc. Đám đông ngu muội tung hô Xuân là 'anh hùng cứu quốc'.",
+                contentSec: "Tác phẩm vạch trần bộ mặt bịt bợm, lố lăng của xã hội thượng lưu Hà Thành những năm 1930. Bản chất Xuân Tóc Đỏ chỉ là một kẻ lưu manh, vô học nhưng nhờ sự mù quáng, rởm đời của xã hội mà trở thành danh nhân, vĩ nhân. Qua đó, tác giả đưa ra thông điệp thời sự cay đắng về sự đảo lộn giá trị đạo đức và xã hội thời bấy giờ.",
+                artSec: "Bút pháp trào phúng bậc thầy, nghệ thuật phóng đại, tạo dựng tình huống tương phản gay gắt. Ngôn ngữ nhân vật sinh động, đậm tính hài hước cá thể hóa; nhịp điệu dồn dập kịch tính như một màn kịch hài trên sân khấu.",
+                excerptText: "‘Hỡi công luận! Nhân dân chưa biết rõ tình thế hốt hoảng đêm qua! Giải quần vợt Pháp - Xiêm - Bắc Kỳ sắp bị bãi bỏ vì nguy cơ chiến tranh... Tôi đã phải hy sinh danh dự cá nhân để cứu quốc!... Mọi người hô to: Xuân Tóc Đỏ vĩ đại! Mẫu dịch cứu quốc vạn sự!’"
+            },
+            {
+                id: 1,
+                title: "Cảm Hoài",
+                excerptTitle: "Thuật Hoài (Cảm Hoài)",
+                author: "Đặng Dung (Thế kỷ XV)",
+                genre: "Thơ thất ngôn đường luật",
+                tagline: "Tráng chí anh hùng và nỗi niềm hoài cổ bi trí",
+                authorSec: "Đặng Dung (?-1414) là danh tướng thời Hậu Trần, một nhân cách cứng cỏi, tận trung vì nước. Ông chiến đấu kiên cường chống quân Minh xâm lược dù rơi vào thế cờ tàn bi kịch.",
+                summarySec: "Bài thơ là lời tự bạch đầy bi tráng của một vị tướng tuổi đã già nhưng nợ nước chưa trả xong. Thế thời đổi thay, việc cơ đồ còn dang dở. Dù trong cảnh ngộ bế tắc, vị tướng vẫn vung gươm mài đá dưới trăng, thể hiện khí tiết kiên trung không bao giờ đầu hàng số phận.",
+                contentSec: "Thể hiện chí khí anh hùng vĩ đại, khát vọng phò vương cứu nước mãnh liệt của thế hệ sĩ phu thời Trần - Lê. Đồng thời chứa đựng nỗi đau bi kịch thời thế sâu sắc, nhưng không bao giờ rơi vào bi quan yếu mềm.",
+                artSec: "Thể thơ thất ngôn đường luật chuẩn mực, hình ảnh thơ hoành tráng, mang tầm vóc vũ trụ ('thùy đầu', 'mài gươm dưới trăng'). Giọng thơ trầm hùng, bi tráng và giàu sức gợi cảm.",
+                excerptText: "‘Thế sự du du奈tảo lão / Giang sơn trầm trọc phó hành bôi.\nThời lai đồ điếu thành công易 / Cơ tẩu anh hùng hận kỉ回.\nBáo quốc hữu tâm tòng hổ trướng / Phụ thiên vô lực vĩ thần đao.\nKỉ độ mài gươm dưới bóng trăng!’"
+            },
+            {
+                id: 2,
+                title: "Mùa Lá Rụng Trong Vườn",
+                excerptTitle: "Trích tiểu thuyết - Chương Ơn Báo",
+                author: "Ma Văn Kháng (Sinh 1936)",
+                genre: "Tiểu thuyết hiện đại",
+                tagline: "Xung đột giá trị văn hóa gia đình thời đổi mới",
+                authorSec: "Ma Văn Kháng là nhà văn xuất sắc của văn học Việt Nam hiện đại, từng nhận Giải thưởng Hồ Chí Minh. Ông đặc biệt thành công với đề tài gia đình và những biến động tâm lý xã hội thời kỳ chuyển mình.",
+                summarySec: "Tác phẩm xoay quanh gia đình ông Bằng - một gia đình nề nếp truyền thống tại Hà Nội trước những sóng gió của thời kỳ kinh tế thị trường. Cảnh chiều 30 Tết cúng tổ tiên là tâm điểm, nơi niềm tin, tình yêu thương và nỗi đau đớn về đứa con trai (Cần) đào ngũ đan xen nhau.",
+                contentSec: "Đặt ra vấn đề thời sự gay gắt: Nhận thức và giữ gìn giá trị văn hóa truyền thống, đạo đức gia đình trước sức ép của nền kinh tế thị trường và lối sống vị kỷ. Tác phẩm đề cao tinh thần bao dung, gắn kết gia đình.",
+                artSec: "Nghệ thuật miêu tả tâm lý nhân vật tinh tế, sắc sảo. Xây dựng không gian không khí Tết cổ truyền ấm áp nhưng chất chứa suy tư. Giọng văn trầm lắng, giàu chất triết lý nhân sinh.",
+                excerptText: "‘Ông Bằng đứng trước bàn thờ gia tiên, làn khói hương trầm nghi ngút. Ông rưng rưng nhớ về những người đã khuất, mong muốn các con giữ trọn nếp nhà giữa những biến động xô đẩy của cuộc đời ngoài kia...’"
+            },
+            {
+                id: 3,
+                title: "Tây Tiến",
+                excerptTitle: "Trích bài thơ Tây Tiến",
+                author: "Quang Dũng (1921 - 1988)",
+                genre: "Thơ trữ tình kháng chiến",
+                tagline: "Bức tượng tượng đài bi tráng về người lính Hà Thành",
+                authorSec: "Quang Dũng là một nghệ sĩ đa tài: làm thơ, viết văn, vẽ tranh, soạn nhạc. Thơ ông mang hồn thơ phóng khoáng, lãng mạn, hào hoa và rất mực tinh tế.",
+                summarySec: "Bài thơ là nỗi nhớ da diết của Quang Dũng về đoàn quân Tây Tiến - những người lính trẻ phần lớn là thanh niên Hà Nội chiến đấu trên địa bàn miền Tây Bắc hoang sơ, hùng vĩ và hiểm trở. Bài thơ khắc họa vẻ đẹp bi tráng, hào hoa của người lính và tình quân dân thắm thiết.",
+                contentSec: "Khắc họa thành công bức tượng đài bằng thơ về người lính cách mạng thời kỳ đầu chống Pháp: Gian khổ, hy sinh nhưng vô cùng lãng mạn, dũng cảm và yêu đời.",
+                artSec: "Bút pháp lãng mạn kết hợp cảm hứng bi tráng. Sử dụng nét vẽ sáng tạo, phối hợp từ ngữ tạo hình, địa danh vừa lạ vừa gợi cảm. Nhịp điệu thơ linh hoạt, nhạc tính dạt dào.",
+                excerptText: "‘Tây Tiến đoàn binh không mọc tóc / Quân xanh màu lá dữ oai hùm\nMắt giật gửi mộng qua biên giới / Đêm mơ Hà Nội dáng kiều thơm\nRải rác biên cương mồ xa xứ / Chiến trường đi chẳng tiếc đời xanh\nÁo bào thay chiếu anh về đất / Sông Mã gầm lên khúc độc hành.’"
+            },
+            {
+                id: 4,
+                title: "Đàn Ghi Ta Của Lor-ca",
+                excerptTitle: "Trích bài thơ Đàn Ghi Ta Của Lor-ca",
+                author: "Thanh Thảo (Sinh 1946)",
+                genre: "Thơ tự do tượng trưng - siêu thực",
+                tagline: "Khát vọng tự do và cái chết bất tử của nghệ sĩ",
+                authorSec: "Thanh Thảo là nhà thơ luôn nỗ lực cách tân thơ Việt Nam hiện đại với hình thức tượng trưng, siêu thực, giàu suy tư triết lý.",
+                summarySec: "Bài thơ thể hiện niềm xúc động sâu sắc trước cái chết bi phẫn của Federico García Lorca - nhà thơ, nhạc sĩ thiên tài người Tây Ban Nha bị phát xít Franco sát hại. Tác phẩm khắc họa hành trình tự do, khát vọng cách tân nghệ thuật và sự bất tử của tiếng đàn Lor-ca.",
+                contentSec: "Ca ngợi tấm gương đấu tranh cho tự do, dân chủ và sự sáng tạo nghệ thuật chân chính. Thể hiện niềm xót thương và sự đồng điệu tâm hồn của Thanh Thảo dành cho Lor-ca.",
+                artSec: "Sử dụng bút pháp tượng trưng, siêu thực với các chuỗi hình ảnh, âm thanh ẩn dụ ('li-la li-la', 'giọt nước mắt vầng trăng', 'tiếng đàn bọt nước'). Kết cấu thơ phóng khoáng không dấu chấm câu.",
+                excerptText: "‘những tiếng đàn bọt nước / Tây Ban Nha áo áo đỏ / li-la li-la li-la / đi lang thang về miền đơn độc / trên lưng ngựa bắn bất ngờ / Lor-ca bị ném xuống hố / tiếng đàn như cỏ mọc giềng...’"
+            },
+            {
+                id: 5,
+                title: "Cuộc Đời Của Pi",
+                excerptTitle: "Trích tiểu thuyết Cuộc Đời Của Pi",
+                author: "Yann Martel (Sinh 1963)",
+                genre: "Tiểu thuyết phiêu lưu tâm lý",
+                tagline: "Bản năng sinh tồn và sức mạnh niềm tin tâm linh",
+                authorSec: "Yann Martel là nhà văn nổi tiếng người Canada. Tác phẩm 'Cuộc đời của Pi' giúp ông giành giải Man Booker năm 2002 và trở thành kiệt tác văn học thế giới.",
+                summarySec: "Đoạn trích kể về cuộc đấu trí và duy trì sự sống gay go của cậu bé Pi Patel trên chiếc xuồng cứu sinh giữa Thái Bình Dương cùng một con hổ Bengal tên Richard Parker. Pi phải tìm cách thuần hóa con hổ để cùng tồn tại.",
+                contentSec: "Tuyên dương nghị lực sống phi thường, bản năng sinh tồn và niềm tin tâm linh sâu sắc của con người trước thử thách nghiệt thù của thiên nhiên.",
+                artSec: "Nghệ thuật kể chuyện lôi cuốn, tưởng tượng phong phú; miêu tả tâm lý nhân vật chân thực, sinh động. Xây dựng biểu tượng mang đa tầng ý nghĩa triết học.",
+                excerptText: "‘Tôi phải thuần hóa nó. Đó là khoảnh khắc tôi nhận ra Richard Parker không chỉ là mối đe dọa, mà chính sự xuất hiện của nó giúp tôi duy trì nghị lực sống và không phát điên giữa đại dương...’"
+            }
+        ];
+
+        /* ----------------------------------------------------
+           2. DATABASE OF QUIZZES (10 Questions Per Work = 60 Total)
+        ---------------------------------------------------- */
+        const quizDatabase = [
+            // WORK 0: Xuân Tóc Đỏ Cứu Quốc (10 câu)
+            [
+                { q: "Tác phẩm 'Số Đỏ' của Vũ Trọng Phụng thuộc thể loại văn học nào?", a: ["Tiểu thuyết trào phúng", "Truyện ngắn lãng mạn", "Kịch nói hiện đại", "Tùy bút"], c: 0 },
+                { q: "Trong đoạn trích 'Xuân Tóc Đỏ cứu quốc', Xuân Tóc Đỏ thi đấu môn thể thao nào?", a: ["Quần vợt (Tennis)", "Bóng đá", "Đua xe đạp", "Bơi lội"], c: 0 },
+                { q: "Vì sao Xuân Tóc Đỏ lại cố ý thua tay vợt người Xiêm?", a: ["Vì muốn giữ quan hệ ngoại giao giữa hai nước", "Vì kỹ thuật kém hơn", "Vì bị chấn thương", "Vì được hối lộ tiền"], c: 0 },
+                { q: "Thái độ của đám đông nhân dân sau khi nghe Xuân Tóc Đỏ diễn thuyết là gì?", a: ["Tung hô Xuân là anh hùng cứu quốc", "Chửi rủa và ném đá Xuân", "Thất vọng bỏ về", "Tố cáo Xuân gian lận"], c: 0 },
+                { q: "Vũ Trọng Phụng được mệnh danh là danh hiệu gì trong nền văn học?", a: ["Ông vua văn đống Bắc Kỳ", "Nhà thơ của tình yêu", "Nhà văn của nông dân", "Bậc thầy ngụ ngôn"], c: 0 },
+                { q: "Nghệ thuật nổi bật nhất được sử dụng trong đoạn trích là gì?", a: ["Bút pháp trào phúng và phóng đại", "Trữ tình đắm thắm", "Miêu tả thiên nhiên trữ tình", "Sử dụng yếu tố kỳ ảo"], c: 0 },
+                { q: "Nhân vật Xuân Tóc Đỏ xuất thân từ tầng lớp nào trong xã hội?", a: ["Lưu manh, vô học, xướng ngôn viên", "Tầng lớp trí thức thượng lưu", "Mới tốt nghiệp đại học", "Võ sĩ chuyên nghiệp"], c: 0 },
+                { q: "Nội dung phản ánh chính của 'Số Đỏ' là gì?", a: ["Vạch trần sự lố lăng của phong trào 'Âu hóa' rởm", "Ca ngợi tình yêu lứa đôi", "Miêu tả cuộc sống nông thôn", "Phản ánh chiến tranh"], c: 0 },
+                { q: "Cụm từ 'Xuân Tóc Đỏ cứu quốc' mang ý nghĩa gì?", a: ["Mỉa mai, trào phúng sâu sắc", "Ca ngợi thật lòng", "Nhắc nhở lịch sử", "Động viên tinh thần thể thao"], c: 0 },
+                { q: "Mục đích chính của các nhân vật thượng lưu khi tung hô Xuân Tóc Đỏ là gì?", a: ["Lợi dụng danh tiếng để trục lợi cá nhân", "Vì tinh thần thể thao", "Vì yêu nước thật sự", "Vì kính trọng Xuân"], c: 0 }
+            ],
+            // WORK 1: Cảm Hoài (10 câu)
+            [
+                { q: "Tác giả Đặng Dung sống vào thời kỳ lịch sử nào?", a: ["Thời Hậu Trần", "Thời Lý", "Thời Tây Sơn", "Thời Nguyễn"], c: 0 },
+                { q: "Thể thơ của bài 'Cảm Hoài' (Thuật hoài) là gì?", a: ["Thất ngôn đường luật", "Lục bát", "Song thất lục bát", "Thơ tự do"], c: 0 },
+                { q: "Cụm từ 'Mài gươm dưới bóng trăng' thể hiện điều gì ở tác giả?", a: ["Chí khí kiên cường và nỗi đau chưa trọn nợ nước", "Sự vui vẻ yêu đời", "Thói quen tập võ đêm", "Khát vọng đi du ngoạn"], c: 0 },
+                { q: "Cảm xúc chủ đạo của bài thơ 'Cảm Hoài' là gì?", a: ["Bi tráng, hào hùng nhưng u hoài", "Vui tươi, hân hoan", "Thương cảm lứa đôi", "Chán ghét cuộc đời"], c: 0 },
+                { q: "Hình ảnh 'thùy đầu' trong bài thơ mang ý nghĩa gì?", a: ["Đầu đã bạc, tuổi đã già", "Cúi đầu chào", "Suy nghĩ trầm tư", "Mệt mỏi gục đầu"], c: 0 },
+                { q: "Nội dung chính của bài thơ ca ngợi điều gì?", a: ["Khát vọng phò vương cứu nước của người anh hùng", "Vẻ đẹp thiên nhiên", "Tình bạn tri kỷ", "Cuộc sống ẩn dật"], c: 0 },
+                { q: "Tác giả Đặng Dung chiến đấu chống lại quân xâm lược nào?", a: ["Quân Minh", "Quân Nguyên Mông", "Quân Thanh", "Quân Pháp"], c: 0 },
+                { q: "Bi kịch lớn nhất của nhân vật trữ tình trong bài thơ là gì?", a: ["Chí lớn nhưng thời thế đã mất, lực bất tòng tâm", "Bị gia đình bỏ rơi", "Không có vũ khí tốt", "Bị quân địch bắt"], c: 0 },
+                { q: "Nghệ thuật đặc sắc của tác phẩm bao gồm yếu tố nào?", a: ["Hình ảnh thơ hoành tráng, tầm vóc vũ trụ", "Sử dụng từ ngữ dân gian", "Giọng văn dí dỏm", "Nghệ thuật trào phúng"], c: 0 },
+                { q: "Bài thơ mang lại bài học tư tưởng nào cho thế hệ sau?", a: ["Lòng trung thành và chí khí anh hùng bất khuất", "Lối sống an nhàn", "Sự thỏa hiệp thời thế", "Tìm kiếm danh lợi"], c: 0 }
+            ],
+            // WORK 2: Mùa Lá Rụng Trong Vườn (10 câu)
+            [
+                { q: "Tác giả của tiểu thuyết 'Mùa lá rụng trong vườn' là ai?", a: ["Ma Văn Kháng", "Nguyễn Minh Châu", "Tô Hoài", "Nam Cao"], c: 0 },
+                { q: "Bối cảnh thời gian chính trong đoạn trích học là thời điểm nào?", a: ["Chiều 30 Tết cổ truyền", "Đêm trung thu", "Sáng mùng 1 Tết", "Ngày hè oi ả"], c: 0 },
+                { q: "Nhân vật trung tâm giữ nếp nhà gia đình là ai?", a: ["Ông Bằng", "Anh Cần", "Chị Phượng", "Anh Đông"], c: 0 },
+                { q: "Mối xung đột chính trong tác phẩm phản ánh điều gì?", a: ["Sự va chạm giữa giá trị truyền thống và lối sống hiện đại", "Xung đột tranh chấp tài sản", "Chiến tranh biên giới", "Sự khác biệt vùng miền"], c: 0 },
+                { q: "Thái độ của ông Bằng đối với bàn thờ gia tiên trong chiều 30 Tết là gì?", a: ["Trân trọng, rưng rưng xúc động", "Thực hiện qua loa", "Thái độ thờ ơ", "Ủy thác cho con làm"], c: 0 },
+                { q: "Tác phẩm 'Mùa lá rụng trong vườn' được viết trong thời kỳ nào?", a: ["Thời kỳ Đổi mới", "Thời kỳ kháng chiến chống Pháp", "Thời kỳ phong kiến", "Thời kỳ bao cấp sớm"], c: 0 },
+                { q: "Thông điệp sâu sắc nhất mà tác giả muốn gửi gắm là gì?", a: ["Gìn giữ văn hóa truyền thống và tình cảm gia đình", "Khuyên con người làm giàu mau chóng", "Tẩy chay văn hóa hiện đại", "Rời xa thành phố về quê"], c: 0 },
+                { q: "Nghệ thuật miêu tả nổi bật nhất của Ma Văn Kháng trong tác phẩm là gì?", a: ["Miêu tả diễn biến tâm lý nhân vật tinh tế", "Tạo kịch tính giật gân", "Bút pháp huyền ảo", "Sử dụng thơ trong truyện"], c: 0 },
+                { q: "Lá rụng trong vườn tượng trưng cho điều gì?", a: ["Sự biến đổi của thời gian và những mất mát gia đình", "Sự cằn cỗi của thiên nhiên", "Niềm vui mùa thu", "Mùa gặt hái"], c: 0 },
+                { q: "Ma Văn Kháng đã từng nhận giải thưởng cao quý nào?", a: ["Giải thưởng Hồ Chí Minh về VHNT", "Giải thưởng Nobel Văn học", "Giải thưởng Pulitzer", "Giải thưởng Bùi Xuân Phái"], c: 0 }
+            ],
+            // WORK 3: Tây Tiến (10 câu)
+            [
+                { q: "Bài thơ 'Tây Tiến' do nhà thơ nào sáng tác?", a: ["Quang Dũng", "Tố Hữu", "Chính Hữu", "Nguyễn Đình Thi"], c: 0 },
+                { q: "Đoàn quân Tây Tiến phần lớn xuất thân từ đâu?", a: ["Thanh niên, học sinh Hà Nội", "Nông dân Nam Bộ", "Công nhân Hải Phòng", "Trí thức Huế"], c: 0 },
+                { q: "Cụm từ 'Không mọc tóc' miêu tả thực tế gian khổ nào của người lính?", a: ["Căn bệnh sốt xuất huyết/sốt xói lở tóc nơi rừng thiêng", "Chủ động cạo đầu cho gọn", "Thói quen của quân đội", "Do thiếu nước tắm"], c: 0 },
+                { q: "Hình ảnh 'Đêm mơ Hà Nội dáng kiều thơm' thể hiện vẻ đẹp gì của người lính?", a: ["Tâm hồn lãng mạn, hào hoa", "Sự ủy mị, yếu đuối", "Nỗi sợ hãi chiến trường", "Sự chán nản nhiệm vụ"], c: 0 },
+                { q: "Cảm hứng chủ đạo xuyên suốt bài thơ Tây Tiến là gì?", a: ["Cảm hứng lãng mạn và bi tráng", "Cảm hứng trào phúng", "Cảm hứng u buồn, bế tắc", "Cảm hứng hiện thực phê phán"], c: 0 },
+                { q: "Hình ảnh 'Sông Mã gầm lên khúc độc hành' sử dụng nghệ thuật nào?", a: ["Nhân hóa và ẩn dụ", "So sánh đối lập", "Phóng đại hài hước", "Nói giảm nói tránh"], c: 0 },
+                { q: "Địa danh nào SAU ĐÂY xuất hiện trong bài thơ Tây Tiến?", a: ["Sài Khao, Mường Lát, Phà Luông", "Việt Bắc, Tân Trào", "Đồng Tháp Mười", "Điện Biên Phủ"], c: 0 },
+                { q: "Cụm từ 'Chiến trường đi chẳng tiếc đời xanh' thể hiện tinh thần gì?", a: ["Sẵn sàng hy sinh tuổi trẻ vì Tổ quốc", "Sự coi thường mạng sống", "Thái độ bốc đồng", "Mục đích tìm kiếm danh vọng"], c: 0 },
+                { q: "Quang Dũng đã sử dụng biện pháp nói giảm nói tránh nào khi miêu tả sự hy sinh?", a: ["'Áo bào thay chiếu anh về đất'", "'Chết gục trên chiến trường'", "'Mất tích trong rừng sâu'", "'Hi sinh không ai biết'"], c: 0 },
+                { q: "Bài thơ Tây Tiến được viết tại địa danh nào khi tác giả rời xa đơn vị?", a: ["Làng Phù Luông", "Hà Nội", "Chiềng Săm", "Tân Trào"], c: 0 }
+            ],
+            // WORK 4: Đàn Ghi Ta Của Lor-ca (10 câu)
+            [
+                { q: "Nhà thơ Thanh Thảo viết bài thơ ca ngợi nghệ sĩ Lor-ca thuộc quốc gia nào?", a: ["Tây Ban Nha", "Nước Pháp", "Nước Ý", "Bồ Đào Nha"], c: 0 },
+                { q: "Âm thanh mô phỏng tiếng đàn xuất hiện mở đầu và kết thúc bài thơ là gì?", a: ["li-la li-la li-la", "tùng tùng tùng", "tí te tí te", "róc rách róc rách"], c: 0 },
+                { q: "Lorca bị lực lượng nào sát hại?", a: ["Phát xít Franco", "Quân đội Anh", "Đế quốc Mỹ", "Quân phát xít Đức"], c: 0 },
+                { q: "Hình ảnh 'Tiếng đàn bọt nước' mang ý nghĩa tượng trưng gì?", a: ["Sự mong manh nhưng luôn tái sinh mạnh mẽ", "Sự vô giá trị của tiếng đàn", "Sự tàn phá của thiên nhiên", "Tiếng sóng biển"], c: 0 },
+                { q: "Phong cách nghệ thuật nổi bật của Thanh Thảo trong bài thơ là gì?", a: ["Tượng trưng, siêu thực", "Hiện thực nghiêm nhặt", "Trào phúng cay đắng", "Cổ điển Đường luật"], c: 0 },
+                { q: "Màu sắc xuất hiện đậm nét tượng trưng cho đấu trường sinh tử Tây Ban Nha là gì?", a: ["Áo đỏ", "Áo xanh", "Áo vàng", "Áo trắng"], c: 0 },
+                { q: "Cụm từ 'Giọt nước mắt vầng trăng' thể hiện cảm xúc gì?", a: ["Sự tiếc thương vô hạn trước sự hy sinh của nghệ sĩ", "Niềm vui chiến thắng", "Nỗi sợ bóng tối", "Sự cô đơn đêm khuya"], c: 0 },
+                { q: "Thái độ của Lor-ca trước cái chết được miêu tả như thế nào?", a: ["Thanh thản đi vào cõi bất tử", "Sợ hãi van xin", "Oán trách cuộc đời", "Tự sát"], c: 0 },
+                { q: "Khát vọng lớn nhất của Lor-ca trong sự nghiệp sáng tác là gì?", a: ["Tự do dân chủ và cách tân nghệ thuật", "Kiếm thật nhiều tiền", "Trở thành chính trị gia", "Trở thành họa sĩ"], c: 0 },
+                { q: "Bài thơ thể hiện tình cảm gì của nhà thơ Thanh Thảo đối với Lor-ca?", a: ["Sự đồng điệu tâm hồn và kính trọng sâu sắc", "Sự tò mò lịch sử", "Thái độ phê phán", "Sự đồng cảm xã giao"], c: 0 }
+            ],
+            // WORK 5: Cuộc Đời Của Pi (10 câu)
+            [
+                { q: "Tác giả của tiểu thuyết 'Cuộc đời của Pi' là ai?", a: ["Yann Martel", "Ernest Hemingway", "J.K. Rowling", "Dan Brown"], c: 0 },
+                { q: "Con vật hung dữ đồng hành cùng cậu bé Pi trên xuồng cứu sinh là gì?", a: ["Con hổ Bengal (Richard Parker)", "Con sư tử", "Con báo gấm", "Con linh cẩu"], c: 0 },
+                { q: "Pi đã phải lênh đênh trên biển Thái Bình Dương bao nhiêu ngày?", a: ["227 ngày", "100 ngày", "365 ngày", "50 ngày"], c: 0 },
+                { q: "Bài học sinh tồn lớn nhất mà Pi nhận ra khi ở cùng con hổ là gì?", a: ["Nỗ lực thuần hóa và sống hòa hợp để duy trì ý chí", "Xua đuổi con hổ xuống biển", "Tiêu diệt con hổ ngay lập tức", "Bỏ hàng phục con hổ"], c: 0 },
+                { q: "Cậu bé Pi Patel có nguồn gốc từ quốc gia nào?", a: ["Ấn Độ", "Canada", "Nước Anh", "Nước Mỹ"], c: 0 },
+                { q: "Yếu tố nào giúp Pi vượt qua thử thách nghiệt thù giữa đại dương?", a: ["Nghị lực sinh tồn và niềm tin tâm linh sâu sắc", "Sự giúp đỡ của tàu cứu hộ ngay lập tức", "May mắn ngẫu nhiên", "Trí thông minh siêu việt bất biến"], c: 0 },
+                { q: "Tiểu thuyết 'Cuộc đời của Pi' đã từng đạt giải thưởng văn học danh giá nào?", a: ["Giải Man Booker (2002)", "Giải Nobel Văn học", "Giải Pulitzer", "Giải Goncourt"], c: 0 },
+                { q: "Hình ảnh con hổ Richard Parker tượng trưng cho điều gì?", a: ["Bản năng sinh tồn dữ dội bên trong con người", "Sự độc ác thuần túy", "Sự phản bội", "Thiên nhiên êm đềm"], c: 0 },
+                { q: "Nghệ thuật kể chuyện của Yann Martel có điểm đặc sắc nào?", a: ["Lôi cuốn, giàu trí tưởng tượng và đa tầng triết lý", "Kể chuyện khô khan", "Giọng văn trào phúng", "Không có cốt truyện rõ ràng"], c: 0 },
+                { q: "Ý nghĩa nhân văn cao cả của đoạn trích là gì?", a: ["Sức mạnh kỳ diệu của ý chí và niềm tin con người", "Khuyên con người nuôi thú dữ", "Phê phán du lịch biển", "Ca ngợi cuộc sống đơn độc"], c: 0 }
+            ]
+        ];
+
+        /* ----------------------------------------------------
+           3. DISCUSSION DATA & LOCALSTORAGE
+        ---------------------------------------------------- */
+        let forumTopics = [
+            {
+                id: "topic-1",
+                title: "Phân tích nhân vật Xuân Tóc Đỏ",
+                desc: "Nghệ thuật trào phúng đỉnh cao của Vũ Trọng Phụng qua nhân vật Xuân.",
+                comments: [
+                    { author: "Nguyễn Thiện Huy (12A2)", text: "Mọi người chú ý phân tích kỹ màn diễn thuyết 'Xuân Tóc Đỏ cứu quốc' ở chương XIX nhé, đây là tâm điểm trào phúng!", time: "10:15 - Hôm nay" },
+                    { author: "Trần Minh Anh", text: "Đúng rồi, nhớ nhấn mạnh sự đối lập giữa bản chất vô học và sự tung hô mù quáng của đám đông." }
+                ]
+            },
+            {
+                id: "topic-2",
+                title: "Cảm hứng bi tráng trong thơ Tây Tiến",
+                desc: "Thảo luận vẻ đẹp lãng mạn và sự hy sinh kiên cường của người lính Hà Thành.",
+                comments: [
+                    { author: "Lê Hoàng Nam", text: "Hình tượng 'Áo bào thay chiếu anh về đất' thực ra người lính chỉ có chiếc chiếu đơn sơ nhưng Quang Dũng đã trang trọng hóa thành áo bào!", time: "09:30 - Hôm nay" }
+                ]
+            }
+        ];
+
+        let activeTopicId = "topic-1";
+        let activeExamQuestions = [];
+        let timerInterval = null;
+
+        /* ----------------------------------------------------
+           4. APP INITIALIZATION & NAVIGATION
+        ---------------------------------------------------- */
+        window.onload = function() {
+            // Animate Splash Screen Progress
+            const splashBar = document.getElementById('splash-progress');
+            if (splashBar) splashBar.style.width = '100%';
+
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                const app = document.getElementById('app-content');
+                if (splash) splash.classList.add('opacity-0');
+                setTimeout(() => {
+                    if (splash) splash.style.display = 'none';
+                    if (app) app.classList.remove('opacity-0');
+                }, 700);
+            }, 1200);
+
+            // Render Featured Works & Full Works
+            renderFeaturedWorks();
+            renderWorksGrid();
+
+            // Load saved discussion topics if any
+            loadForumFromStorage();
+            renderTopicsSidebar();
+            renderActiveTopicComments();
+        };
+
+        function switchTab(tabId) {
+            // Update Tab UI
+            const tabs = ['home', 'works', 'practice', 'discussion', 'about'];
+            tabs.forEach(t => {
+                const panel = document.getElementById(`tab-${t}`);
+                const navBtn = document.getElementById(`nav-${t}`);
+                if (panel) panel.classList.remove('active');
+                if (navBtn) {
+                    navBtn.classList.remove('text-gold', 'bg-sepia-100');
+                    navBtn.classList.add('text-sepia-700');
+                }
+            });
+
+            const targetPanel = document.getElementById(`tab-${tabId}`);
+            const targetNav = document.getElementById(`nav-${tabId}`);
+            if (targetPanel) targetPanel.classList.add('active');
+            if (targetNav) {
+                targetNav.classList.add('text-gold', 'bg-sepia-100');
+                targetNav.classList.remove('text-sepia-700');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        /* ----------------------------------------------------
+           5. RENDERING WORKS & MODAL READER
+        ---------------------------------------------------- */
+        function renderFeaturedWorks() {
+            const container = document.getElementById('home-featured-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            // Show first 3 works as featured
+            worksData.slice(0, 3).forEach(w => {
+                const card = `
+                    <div class="rounded-xl bg-sepia-100 border border-sepia-200 p-6 shadow-sm hover:shadow-md hover:border-gold transition flex flex-col justify-between space-y-4">
+                        <div class="space-y-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-gold/20 text-gold uppercase">${w.genre}</span>
+                            <h3 class="font-serif text-xl font-bold text-sepia-900">${w.title}</h3>
+                            <p class="text-xs font-semibold text-sepia-600"><i class="fa-solid fa-pen-nib text-gold mr-1"></i>${w.author}</p>
+                            <p class="text-xs text-sepia-700 line-clamp-3 italic">"${w.tagline}"</p>
+                        </div>
+                        <button onclick="openReaderModal(${w.id})" class="w-full py-2 rounded-lg bg-sepia-200 hover:bg-gold hover:text-sepia-900 text-sepia-800 text-xs font-bold transition flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-book-open"></i><span>Đọc Chi Tiết Tác Phẩm</span>
+                        </button>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        function renderWorksGrid() {
+            const container = document.getElementById('works-grid');
+            if (!container) return;
+            container.innerHTML = '';
+
+            // Render all 6 works
+            worksData.forEach(w => {
+                const card = `
+                    <div class="rounded-2xl bg-sepia-100 border border-sepia-300 p-6 shadow-sm hover:shadow-xl hover:border-gold transition duration-300 flex flex-col justify-between space-y-5">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="px-3 py-1 rounded-full text-xs font-bold bg-gold/20 text-gold uppercase tracking-wider">${w.genre}</span>
+                                <span class="text-xs font-bold text-sepia-400">#0${w.id + 1}</span>
+                            </div>
+                            <h3 class="font-serif text-2xl font-bold text-sepia-900 leading-tight">${w.title}</h3>
+                            <p class="text-xs font-bold text-sepia-700 flex items-center"><i class="fa-solid fa-feather-pointed text-gold mr-2"></i>${w.author}</p>
+                            <div class="p-3 rounded-xl bg-sepia-50 border border-sepia-200 text-xs text-sepia-700 italic">
+                                "${w.tagline}"
+                            </div>
+                        </div>
+                        <button onclick="openReaderModal(${w.id})" class="w-full py-3 rounded-xl bg-gold hover:bg-gold-hover text-sepia-900 font-bold text-sm transition shadow-sm flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-book-open-reader"></i><span>Đọc Phân Tích Chi Tiết</span>
+                        </button>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+
+            // Card "Các tác phẩm tiếp theo đang cập nhật..."
+            const updatingCard = `
+                <div class="rounded-2xl shimmer-bg border border-dashed border-gold/50 p-6 shadow-sm flex flex-col items-center justify-center text-center space-y-4 min-h-[280px]">
+                    <div class="w-14 h-14 rounded-full bg-gold/20 border border-gold text-gold flex items-center justify-center text-2xl animate-spin" style="animation-duration: 8s;">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </div>
+                    <div class="space-y-1">
+                        <h3 class="font-serif text-lg font-bold text-sepia-900">Các Tác Phẩm Tiếp Theo...</h3>
+                        <p class="text-xs text-sepia-600 font-medium">Đang trong quá trình biên soạn chi tiết</p>
+                    </div>
+                    <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-sepia-200 text-sepia-700">Học Kỳ II • Năm 2027</span>
+                </div>
+            `;
+            container.innerHTML += updatingCard;
+        }
+
+        function openReaderModal(workId) {
+            const w = worksData.find(item => item.id === workId);
+            if (!w) return;
+
+            document.getElementById('modal-genre').innerText = w.genre;
+            document.getElementById('modal-title').innerText = w.title;
+            document.getElementById('modal-author').innerText = w.author;
+
+            document.getElementById('modal-sec-author').innerHTML = `<p>${w.authorSec}</p>`;
+            document.getElementById('modal-sec-summary').innerHTML = `<p>${w.summarySec}</p>`;
+            document.getElementById('modal-sec-content').innerHTML = `<p>${w.contentSec}</p>`;
+            document.getElementById('modal-sec-art').innerHTML = `<p>${w.artSec}</p>`;
+            document.getElementById('modal-sec-excerpt').innerHTML = `<p class="whitespace-pre-line">${w.excerptText}</p>`;
+
+            const modal = document.getElementById('modal-reader');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeReaderModal() {
+            const modal = document.getElementById('modal-reader');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        /* ----------------------------------------------------
+           6. QUIZ & RANDOM EXAM ENGINE
+        ---------------------------------------------------- */
+        function startSpecificQuiz() {
+            const select = document.getElementById('practice-work-select');
+            const workIdx = parseInt(select.value);
+            const w = worksData[workIdx];
+            const questions = quizDatabase[workIdx];
+
+            activeExamQuestions = questions.map(q => ({ ...q }));
+
+            document.getElementById('quiz-badge').innerText = "Chế độ: Ôn tập theo tác phẩm";
+            document.getElementById('quiz-title').innerText = w.title + " (10 Câu)";
+            document.getElementById('quiz-timer').classList.add('hidden');
+
+            renderQuizQuestions();
+        }
+
+        function startRandomExam() {
+            switchTab('practice');
+
+            // Flatten all questions with work reference
+            let allQ = [];
+            quizDatabase.forEach((workQs, wIdx) => {
+                workQs.forEach(q => {
+                    allQ.push({ ...q, workTitle: worksData[wIdx].title });
+                });
+            });
+
+            // Shuffle array
+            for (let i = allQ.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allQ[i], allQ[j]] = [allQ[j], allQ[i]];
+            }
+
+            // Pick first 30 questions
+            activeExamQuestions = allQ.slice(0, 30);
+
+            document.getElementById('quiz-badge').innerText = "Chế độ: Đề Thi Tổng Hợp Ngẫu Nhiên";
+            document.getElementById('quiz-title').innerText = "Đề Thi Trắc Nghiệm Tổng Hợp Ngữ Văn 12";
+            
+            // Show Timer (30 mins = 1800s)
+            const timerBox = document.getElementById('quiz-timer');
+            timerBox.classList.remove('hidden');
+            timerBox.classList.add('flex');
+            
+            startExamTimer(1800);
+            renderQuizQuestions();
+        }
+
+        function renderQuizQuestions() {
+            document.getElementById('quiz-result-area').classList.add('hidden');
+            const container = document.getElementById('quiz-questions-list');
+            container.innerHTML = '';
+
+            activeExamQuestions.forEach((q, idx) => {
+                const workInfo = q.workTitle ? `<span class="text-xs font-semibold text-gold block mb-1">[${q.workTitle}]</span>` : '';
+                
+                let optionsHtml = '';
+                q.a.forEach((opt, optIdx) => {
+                    optionsHtml += `
+                        <label class="flex items-center space-x-3 p-3 rounded-xl border border-sepia-200 bg-sepia-50 hover:bg-sepia-200/50 cursor-pointer transition">
+                            <input type="radio" name="question-${idx}" value="${optIdx}" class="w-4 h-4 text-gold focus:ring-gold border-sepia-300">
+                            <span class="text-sm text-sepia-800">${opt}</span>
+                        </label>
+                    `;
+                });
+
+                const qCard = `
+                    <div class="p-5 rounded-xl bg-sepia-50 border border-sepia-200 space-y-3">
+                        ${workInfo}
+                        <h4 class="font-serif font-bold text-sepia-900 text-base">Câu ${idx + 1}: ${q.q}</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += qCard;
+            });
+
+            document.getElementById('quiz-container').classList.remove('hidden');
+            window.scrollTo({ top: document.getElementById('quiz-container').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function startExamTimer(seconds) {
+            if (timerInterval) clearInterval(timerInterval);
+            let timeLeft = seconds;
+
+            const timerText = document.getElementById('timer-text');
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const m = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+                const s = (timeLeft % 60).toString().padStart(2, '0');
+                if (timerText) timerText.innerText = `${m}:${s}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("Đã hết thời gian làm bài! Hệ thống sẽ tự động nộp bài.");
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        function submitQuiz() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            let correctCount = 0;
+            const total = activeExamQuestions.length;
+
+            activeExamQuestions.forEach((q, idx) => {
+                const selected = document.querySelector(`input[name="question-${idx}"]:checked`);
+                if (selected && parseInt(selected.value) === q.c) {
+                    correctCount++;
+                }
+            });
+
+            const percentage = Math.round((correctCount / total) * 100);
+
+            // Display Results
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('result-correct').innerText = `${correctCount} / ${total} câu`;
+            document.getElementById('result-percent').innerText = `${percentage}%`;
+            
+            const progressBar = document.getElementById('result-progress-bar');
+            if (progressBar) progressBar.style.width = `${percentage}%`;
+
+            const feedback = document.getElementById('result-feedback');
+            if (percentage >= 80) {
+                feedback.innerText = "Tuyệt vời! Bạn nắm rất vững kiến thức bài học.";
+            } else if (percentage >= 50) {
+                feedback.innerText = "Khá tốt! Hãy ôn tập lại những phần chưa đạt nhé.";
+            } else {
+                feedback.innerText = "Bạn nên đọc lại bài giảng chi tiết ở Thư viện Tác phẩm!";
+            }
+
+            document.getElementById('quiz-result-area').classList.remove('hidden');
+        }
+
+        function cancelQuiz() {
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('quiz-container').classList.add('hidden');
+        }
+
+        function resetQuizView() {
+            document.getElementById('quiz-result-area').classList.add('hidden');
+        }
+
+        /* ----------------------------------------------------
+           7. FORUM & DISCUSSION SYSTEM (Local Storage)
+        ---------------------------------------------------- */
+        function loadForumFromStorage() {
+            const saved = localStorage.getItem('vk01_forum_topics');
+            if (saved) {
+                try {
+                    forumTopics = JSON.parse(saved);
+                } catch(e) {
+                    console.error("Storage error:", e);
+                }
+            }
+        }
+
+        function saveForumToStorage() {
+            localStorage.setItem('vk01_forum_topics', JSON.stringify(forumTopics));
+        }
+
+        function renderTopicsSidebar() {
+            const container = document.getElementById('topic-channels-list');
+            if (!container) return;
+            container.innerHTML = '';
+
+            forumTopics.forEach(t => {
+                const isActive = t.id === activeTopicId;
+                const activeClass = isActive ? 'bg-gold text-sepia-900 font-bold' : 'text-sepia-800 hover:bg-sepia-300/50';
+                
+                const btn = `
+                    <button onclick="switchTopic('${t.id}')" class="w-full text-left px-3 py-2 rounded-xl text-xs flex items-center space-x-2 transition ${activeClass}">
+                        <i class="fa-solid fa-hashtag text-xs"></i>
+                        <span class="truncate">${t.title}</span>
+                    </button>
+                `;
+                container.innerHTML += btn;
+            });
+        }
+
+        function switchTopic(topicId) {
+            activeTopicId = topicId;
+            renderTopicsSidebar();
+            renderActiveTopicComments();
+        }
+
+        function renderActiveTopicComments() {
+            const topic = forumTopics.find(t => t.id === activeTopicId) || forumTopics[0];
+            if (!topic) return;
+
+            document.getElementById('current-topic-title').innerText = `# ${topic.title}`;
+            document.getElementById('current-topic-desc').innerText = topic.desc;
+
+            const container = document.getElementById('messages-container');
+            container.innerHTML = '';
+
+            if (topic.comments.length === 0) {
+                container.innerHTML = `<p class="text-xs text-sepia-500 italic text-center py-8">Chưa có bình luận nào. Hãy là người đầu tiên trao đổi!</p>`;
+                return;
+            }
+
+            topic.comments.forEach(c => {
+                const timeStr = c.time || 'Vừa xong';
+                const commentHtml = `
+                    <div class="p-3.5 rounded-xl bg-sepia-100 border border-sepia-200 space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-xs text-sepia-900"><i class="fa-solid fa-circle-user text-gold mr-1"></i>${c.author}</span>
+                            <span class="text-[10px] text-sepia-500">${timeStr}</span>
+                        </div>
+                        <p class="text-xs text-sepia-800 leading-relaxed">${c.text}</p>
+                    </div>
+                `;
+                container.innerHTML += commentHtml;
+            });
+
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleSendComment(e) {
+            e.preventDefault();
+            const authorInput = document.getElementById('chat-author');
+            const textInput = document.getElementById('chat-text');
+
+            const author = authorInput.value.trim();
+            const text = textInput.value.trim();
+
+            if (!author || !text) return;
+
+            const topic = forumTopics.find(t => t.id === activeTopicId);
+            if (topic) {
+                const now = new Date();
+                const timeStr = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                topic.comments.push({ author, text, time: `${timeStr} - Hôm nay` });
+                saveForumToStorage();
+                renderActiveTopicComments();
+                textInput.value = '';
+            }
+        }
+
+        function openNewTopicModal() {
+            document.getElementById('modal-topic').classList.remove('hidden');
+        }
+
+        function closeNewTopicModal() {
+            document.getElementById('modal-topic').classList.add('hidden');
+        }
+
+        function handleCreateTopic(e) {
+            e.preventDefault();
+            const title = document.getElementById('topic-title-input').value.trim();
+            const desc = document.getElementById('topic-desc-input').value.trim();
+
+            if (!title || !desc) return;
+
+            const newId = `topic-${Date.now()}`;
+            forumTopics.push({
+                id: newId,
+                title: title,
+                desc: desc,
+                comments: []
+            });
+
+            saveForumToStorage();
+            closeNewTopicModal();
+            
+            document.getElementById('topic-title-input').value = '';
+            document.getElementById('topic-desc-input').value = '';
+
+            switchTopic(newId);
+        }
+    </script>
+</body>
+</html>
